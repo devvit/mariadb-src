@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+install() {
+  version=$2
+  install_dir=$3
+
+  build_dir=$(mktemp -d)
+  cd $build_dir
+
+  curl -fSL -JO "https://downloads.mariadb.com/MariaDB/mariadb-${version}/source/mariadb-${version}.tar.gz"
+  tar -xzf mariadb*.tar.gz
+  rm -rf mariadb*.tar.gz
+  cd mariadb*
+  rm -rf storage/mroonga/vendor/groonga
+  mkdir build
+  cd build
+  CXXFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" PKG_CONFIG_PATH=$(asdf where groonga-src)/lib/pkgconfig cmake -DWITH_PCRE=bundled \
+    -DCMAKE_INSTALL_PREFIX=$install_dir \
+    -DWITH_READLINE=yes -DWITH_SSL=no -DWITH_UNIT_TESTS=OFF \
+    -DDEFAULT_CHARSET=utf8mb4 -DDEFAULT_COLLATION=utf8mb4_general_ci ..
+  make install || exit 1
+}
+
+install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
