@@ -9,7 +9,7 @@ install() {
 
   # curl -fSL -JO "https://downloads.mariadb.com/MariaDB/mariadb-${version}/source/mariadb-${version}.tar.gz"
   # curl -fSL -JO "https://mirrors.ustc.edu.cn/mariadb//mariadb-${version}/source/mariadb-${version}.tar.gz"
-  curl -fSL -JO http://sfo1.mirrors.digitalocean.com/mariadb//mariadb-${version}/source/mariadb-${version}.tar.gz
+  curl -fSL -JO "https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-${version}/source/mariadb-${version}.tar.gz"
   tar -xzf mariadb*.tar.gz
   rm -rf mariadb*.tar.gz
   cd mariadb*
